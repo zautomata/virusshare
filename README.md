@@ -1,6 +1,5 @@
 # Synopsis
-
-virusshare.sh is a shell script collection for downloading malwares torrent archives from virusshare.com
+virusshare.sh is a collection of shell scripts for automatically downloading malwares torrent archives from virusshare.com
 
 ## Technical Freatures
 - [x] Ability to download a virusshare.com full torrent list 
