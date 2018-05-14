@@ -1,0 +1,27 @@
+#!/bin/sh
+
+if [ -e DATA/torrent.list ]; then
+	echo "$0: torrent.list already exists!"
+
+	echo "$0: check for new updates"
+	curl -s http://tracker.virusshare.com:6969/rss_feed.xml | \
+		hxselect -s '\n' -c item link > DATA/torrent.list.new
+
+	if diff DATA/torrent.list DATA/torrent.list.new > /dev/null
+	then
+		echo "$0: No update!"
+		rm DATA/torrent.list.new
+		exit 1
+	else
+		echo "$0: Update found!"
+		mv DATA/torrent.list.new DATA/torrent.list
+		exit 0 
+	fi
+else
+	echo "$0: torrent.list doesn't exist!"
+	echo "$0: scrape torrent.list for the first time!"
+	curl -s http://tracker.virusshare.com:6969/rss_feed.xml | \
+		hxselect -s '\n' -c item link > DATA/torrent.list
+fi
+echo ""
+exit

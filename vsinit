@@ -1,0 +1,44 @@
+#!/bin/sh
+
+echo "$0 | creating new /DATA dir"
+rm -rf DATA
+mkdir DATA
+echo "$0 | creating /DATA/EXTRACTED"
+mkdir -p DATA/EXTRACTED
+
+echo "$0 | creating new /logs directory"
+rm -rf logs
+mkdir logs
+
+echo "$0 | creating new /snapshots directory"
+rm -rf snapshots 
+mkdir snapshots 
+
+echo "$0 | removing all torrents, and killing all transmission daemons for a fresh start!"
+transmission-remote -t all -r #TODO for testing purposes only; commentout in production.
+pkill -f transmission
+
+echo "$0 | creating new /config directory"
+rm -rf config 
+mkdir config
+
+echo "$0 | creating new /config/access.credentials file"
+touch config/access.credentials
+#TODO password reset after testing phase!  
+echo "maf" >> config/access.credentials
+echo "LsJ13DoamfwM" >> config/access.credentials
+
+echo "$0 | Notice: you MUST amend the access.credentials file, i.e."
+echo "$0 | username"
+echo "$0 | password"
+
+echo "$0 | cp -r ~/.config/transmission-daemon config/transmission-daemon"
+cp -r /home/zautomata/.config/transmission-daemon/ config/transmission-daemon
+sed -i 's/"script-torrent-done-enabled": false/"script-torrent-done-enabled": true/g' config/transmission-daemon/settings.json
+sed -i 's/"script-torrent-done-filename": ""/"script-torrent-done-filename": ".\/vsextract"/g' config/transmission-daemon/settings.json
+
+#    "scrape-paused-torrents-enabled": true,
+#    "script-torrent-done-filename": "",
+#    "seed-queue-enabled": false,
+ 
+echo ""

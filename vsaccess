@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Read piped input into $url
+
+# setup credentials
+username=`head -n 1 config/access.credentials | tail -n 1`
+password=`head -n 2 config/access.credentials | tail -n 1`
+
+# Access https://virusshare.com/ with credentials
+echo "$0: accessing virusshare"
+curl -s https://virusshare.com/processlogin.4n6 -c config/cookiefile -d "username=$username&password=$password"
+echo "$0: config/cookiefile created"
+
+echo ""
+exit

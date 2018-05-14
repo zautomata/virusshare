@@ -1,0 +1,12 @@
+#!/bin/sh
+
+sp='/-\|'
+printf ' '
+count=1;
+while true; do
+    #printf $count + '\b%.1s' "$sp"
+    printf $count '\b%.1s' "$sp"
+    #echo ""
+    sp=${sp#?}${sp%???}
+    let count++
+done

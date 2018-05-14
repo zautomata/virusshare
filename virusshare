@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# sets version
+version="1.0.0"               
+
+# Usage
+[[ $* = -h ]] && 
+	{ 
+	echo "virusshare $version"
+	echo "usage: virusshare"
+	exit 1
+	}
+
+vsinit
+vsupdate
+updates=$? # store last command exit status
+if [ $updates -eq 0 ];then
+	vsaccess && \
+	vssnap && \
+	vstorrents && \
+	vsinfo && \
+	vsdownload
+else
+	echo "$0 no updates found, no action"
+fi
+echo ""
+exit

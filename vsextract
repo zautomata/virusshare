@@ -1,0 +1,36 @@
+#!/bin/sh
+
+#
+# vsextract extracts completed torrents
+#
+
+#echo "$0: vsextract activated...." >> extracted 
+
+#TODO use tail over the logs/transmission.log and find "done" to extract file
+# Extract downloaded torrents inside a DATA/ 
+#TODO zip with password "infected"
+#find /$TR_TORRENT_DIR/$TR_TORRENT_NAME -name "*.rar" -execdir unrar e -o- "{}" \;
+#echo $(find /$TR_TORRENT_DIR/$TR_TORRENT_NAME) 
+#unzip -P infected /$TR_TORRENT_DIR/$TR_TORRENT_NAME 
+#unzip -P infected './DATA/*.zip'
+
+#zip --password "infected" file.zip $(ls .)
+#mv file.zip DATA
+zip --password "infected" DATA/file.zip $(ls vs*)
+
+sleep 1
+
+edir="./DATA/EXTRACTED" 
+for z in `ls ./DATA/*.zip`; do
+	echo "$0 | extracting $z to $edir"  
+	# -d to speicfy a dir
+	# -o overrise without asking
+	# -f freshen existing files, 
+	# i.e., extract only those files that already exist on disk 
+	#       and that are newer than the disk copies. 	
+	#unzip -f -o -P "infected" $z -d $edir
+	unzip -o -P "infected" $z -d $edir
+	echo "$0 | extracting $z to $edir DONE"
+done
+
+echo ""

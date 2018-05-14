@@ -1,0 +1,42 @@
+#!/bin/sh
+
+# try to find dates on the website via html
+
+# setup credentials
+#username=`head -n 1 access.credentials | tail -n 1`
+#password=`head -n 2 access.credentials | tail -n 1`
+
+# Access https://virusshare.com/ with credentials
+#curl -s https://virusshare.com/processlogin.4n6 -c cookiefile -d "username=$username&password=$p
+#assword"
+
+# Scrape Virsshare torrent page for .torrent links
+#curl -s https://virusshare.com/torrents.4n6 -b cookiefile | hxnormalize | hxwls | grep ".torrent
+#" > DATA/torrent.list
+
+#curl -s https://virusshare.com/torrents.4n6 -b cookiefile | hxnormalize | hxtabletrans > table
+#curl -s https://virusshare.com/torrents.4n6 -b cookiefile | hxtabletrans > table
+
+#curl $url -s -k -b cookiefile $url -o DATA/$COUNTER.torrent
+#curl $url -s -k -b cookiefile $url -o DATA/
+#curl $url -b cookiefile $url -o torrents/$COUNTER.torrent
+#curl -s https://virusshare.com/torrents.4n6 -b cookiefile | hxnormalize | hxselect 'body > center:nth-child(3) > p:nth-child(2) > table > tbody > tr:nth-child(2)' > extracted
+#       curl -s https://virusshare.com/torrents.4n6 -b cookiefile | hxnormalize | hxextract '/html/body/center[2]/p[1]/table/tbody/tr[2]/td[3]' > extracted
+
+# create torrent.info files
+#COUNTER=1
+
+DATA=DATA
+ls $DATA/*.torrent | while read filepath 
+	do
+		basename=`basename $filepath .torrent`
+		tfile=$basename.info
+		echo "creating $DATA/$tfile"
+		echo "==== Torrent Info ===="> $DATA/$tfile
+		transmission-show $filepath >> $DATA/$tfile 
+		echo "==== End of Torrent Info ====">> $DATA/$tfile 
+		sleep 1
+	done
+echo ""
+exit
+

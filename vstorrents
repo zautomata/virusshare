@@ -1,0 +1,15 @@
+#!/bin/sh
+echo "$0: downloading .torrent files!"
+COUNTER=1 
+cat DATA/torrent.list | while read url 
+do
+	echo $url
+	echo "$0 $COUNTER: Downloading $url"
+	name=`printf "%010d" $COUNTER`
+	curl $url -s -k $url -o DATA/$name.torrent
+	#curl $url -s -k $url -o DATA/$COUNTER.torrent
+	let COUNTER=COUNTER+1
+	#sleep 1
+done
+echo ""
+exit

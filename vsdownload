@@ -1,0 +1,28 @@
+#!/bin/sh
+
+#
+# transmission client daemon setup
+#
+
+# killing any existing transmission daemons
+pkill -f transmission
+
+# -w setup download dir
+# -c watch dir for new added torrents
+# -e setup logging
+# -g usg config/settings.json
+# --pasued pasue all downloads on startup
+echo "$0| transmission-daemon starting..."
+transmission-daemon --paused -w ./DATA  -c ./DATA -e logs/transmission.log -g ./config/transmission-daemon
+echo "$0| ---------------------------------------------"
+echo "$0| 'transmission-remote -l' to list all torrents"
+echo ""
+echo "$0| 'transmission-remote --torrent all --start' to start all torrents"
+echo "$0| 'transmission-remote --torrent all --stop' to stop all torrents"
+echo ""
+echo "$0| 'transmission-remote -t [ID] -S' to Stop/pause a specific torrent"
+echo "$0| 'transmission-remote -t [ID] -s' to Start/resume a specific torrent"
+echo "$0| ---------------------------------------------"
+
+echo ""
+exit

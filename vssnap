@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Read piped input into $url
+#read url 
+
+echo "$0| Creating a snapshot of virusshare torrent archive page"
+
+TODAY=$(date +"%Y%m%d")
+curl -s https://virusshare.com/torrents.4n6 -b config/cookiefile | hxnormalize | wkhtmltopdf - snapshots/torrents_$TODAY.pdf
+
+echo ""
+exit
